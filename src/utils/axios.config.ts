@@ -1,4 +1,4 @@
-import axios, { GaxiosOptions, request } from "gaxios";
+import axios, { GaxiosOptions, GaxiosResponse, request } from "gaxios";
 import { GoogleAuth } from "google-auth-library";
 
 export class GoogleAdsApiClient {
@@ -18,7 +18,7 @@ export class GoogleAdsApiClient {
     });
   }
 
-  static async request<T>(options: GaxiosOptions): Promise<T> {
+  static async request<T>(options: GaxiosOptions): Promise<GaxiosResponse<T>> {
     const authClient = await this.auth.getClient();
     const token = await authClient.getAccessToken();
 
