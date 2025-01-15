@@ -8,6 +8,25 @@ export class CampaignService {
       method: "GET",
     });
 
-    return response.results.map((r) => r.campaign);
+    return response.data.results.map((r) => r.campaign);
+  }
+  async getCampaign(customerId: string, campaignId: string): Promise<Campaign> {
+    const response = await GoogleAdsApiClient.request<SearchGoogleAdsResponse>({
+      url: `/v14/customers/${customerId}/campaigns/${campaignId}`,
+      method: "GET",
+    });
+
+    return response.data.results[0].campaign;
+  }
+  async createCampaign(customerId: string, campaign: Campaign): Promise<Campaign> {
+    const response = await GoogleAdsApiClient.request<SearchGoogleAdsResponse>({
+      url: `/v14/customers/${customerId}/campaigns`,
+      method: "POST",
+      data: {
+        campaign,
+      },
+    });
+
+    return response.data.results[0].campaign;
   }
 }
