@@ -18,7 +18,10 @@ export class CampaignService {
 
     return response.data.results[0].campaign;
   }
-  async createCampaign(customerId: string, campaign: Campaign): Promise<Campaign> {
+  async createCampaign(
+    customerId: string,
+    campaign: Campaign
+  ): Promise<Campaign> {
     const response = await GoogleAdsApiClient.request<SearchGoogleAdsResponse>({
       url: `/v14/customers/${customerId}/campaigns`,
       method: "POST",
@@ -28,5 +31,26 @@ export class CampaignService {
     });
 
     return response.data.results[0].campaign;
+  }
+  async updateCampaign(
+    customerId: string,
+    campaignId: string,
+    campaign: Campaign
+  ): Promise<Campaign> {
+    const response = await GoogleAdsApiClient.request<SearchGoogleAdsResponse>({
+      url: `/v14/customers/${customerId}/campaigns/${campaignId}`,
+      method: "PUT",
+      data: {
+        campaign,
+      },
+    });
+
+    return response.data.results[0].campaign;
+  }
+  async deleteCampaign(customerId: string, campaignId: string): Promise<void> {
+    await GoogleAdsApiClient.request({
+      url: `/v14/customers/${customerId}/campaigns/${campaignId}`,
+      method: "DELETE",
+    });
   }
 }
