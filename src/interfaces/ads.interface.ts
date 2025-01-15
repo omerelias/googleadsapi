@@ -1,4 +1,4 @@
-export interface GoogleAdsCredentials {
+export interface GoogleAdsConfig {
   clientEmail: string;
   privateKey: string;
   developerToken: string;
